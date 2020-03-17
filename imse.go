@@ -2,20 +2,18 @@ package itsImse
 
 import (
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"fmt"
 )
 
 type SoapRequest struct {
-	username   string
-	password   string
-	method 	   uint
-	mesage     string
+	username string
+	password string
+	method   uint
+	mesage   string
 }
-
-
 
 /*
 NewSoapRequest creates a new SoapRequest
@@ -24,8 +22,6 @@ func NewSoapRequest() *SoapRequest {
 	out := new(SoapRequest)
 	return out
 }
-
-
 
 /*
 It puts the Data for a New Instance Link into the SoapRequest
@@ -119,6 +115,7 @@ func (p *SoapRequest) CreateNewLink(link Link) (err error, r *SoapRequest) {
 	r = p
 	return
 }
+
 type createLinkMessage struct {
 	XMLName  xml.Name `xml:"Message"`
 	Xmlns    string   `xml:"xmlns,attr"`
@@ -160,7 +157,6 @@ type createLinkMessage struct {
 	} `xml:"CreateExtensionInstance"`
 }
 
-
 /*
 Sends the SoapRequest and printed out the response.
 The response is a number for the Queue when success is true
@@ -176,7 +172,7 @@ func (p *SoapRequest) Send() (response string, success bool, err error) {
 		httpMethod := "POST"
 		req, err := http.NewRequest(httpMethod, "https://migra.itsltest.com/DataService.svc", strings.NewReader(soap))
 		if err != nil {
-			return "",false, err
+			return "", false, err
 		}
 		req.Header.Set("Content-type", cont)
 		req.Header.Set("SOAPAction", action)
@@ -185,12 +181,11 @@ func (p *SoapRequest) Send() (response string, success bool, err error) {
 
 		res, err := client.Do(req)
 		if err != nil {
-			return "",false, err
+			return "", false, err
 		}
 
 		bodyBytes, err := ioutil.ReadAll(res.Body)
 		response = string(bodyBytes)
-
 
 		// check if it works
 		if !strings.Contains(res.Status, "200") {
@@ -212,10 +207,9 @@ func (p *SoapRequest) Send() (response string, success bool, err error) {
 		data := []byte(response)
 		err = xml.Unmarshal(data, &responseMessage)
 		if err != nil {
-			return response,false, err
+			return response, false, err
 		}
-		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId,true, nil
-
+		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId, true, nil
 
 	case 2:
 		action := "http://tempuri.org/IDataService/AddMessage"
@@ -255,13 +249,11 @@ func (p *SoapRequest) Send() (response string, success bool, err error) {
 		data := []byte(response)
 		err = xml.Unmarshal(data, &responseMessage)
 		if err != nil {
-			return response,false, err
+			return response, false, err
 		}
-		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId,true, nil
+		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId, true, nil
 
-
-
-		return response,true, nil
+		return response, true, nil
 	case 4:
 		action := "http://tempuri.org/IDataService/AddMessage"
 		begin := CreateSoapBegin(*p, p.username, p.password)
@@ -302,23 +294,22 @@ func (p *SoapRequest) Send() (response string, success bool, err error) {
 		data := []byte(response)
 		err = xml.Unmarshal(data, &responseMessage)
 		if err != nil {
-			return response,false, err
+			return response, false, err
 		}
-		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId,true, nil
+		return responseMessage.Body.AddMessageResponse.AddMessageResult.MessageId, true, nil
 
 	default:
-		return "",false, nil
+		return "", false, nil
 
 	}
 
 	return
 }
 
-
 func CreateSoapBegin(soapRequest SoapRequest, username string, password string) string {
 	switch soapRequest.method {
 	case 1:
-		begin := `<x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
+		begin := `<x:envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
     <x:Header>
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
@@ -334,7 +325,7 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
                     <![CDATA[`
 		return begin
 	case 2:
-		begin := `<x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
+		begin := `<x:envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
 <x:Header>
 	<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
 <wsse:UsernameToken>
@@ -351,7 +342,7 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
 		return begin
 	case 4:
 		begin := `
-<x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
+<x:envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/" xmlns:its="http://schemas.datacontract.org/2004/07/Itslearning.Integration.ContentImport.Services.Entities">
     <x:Header>
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
@@ -375,14 +366,14 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
 func CreateSoapTailInput(p *SoapRequest) (tail string) {
 	switch p.method {
 	case 1:
-		tail =  `
+		tail = `
 				]]>
                 </its:Data>
                 <its:Type>49</its:Type>
             </tem:dataMessage>
         </tem:AddMessage>
     </x:Body>
-</x:Envelope>`
+</x:envelope>`
 		return
 	case 2:
 		tail = `
@@ -392,7 +383,7 @@ func CreateSoapTailInput(p *SoapRequest) (tail string) {
             </tem:dataMessage>
         </tem:AddMessage>
     </x:Body>
-</x:Envelope>	
+</x:envelope>	
 `
 		return
 	case 4:
@@ -404,7 +395,7 @@ func CreateSoapTailInput(p *SoapRequest) (tail string) {
             </tem:dataMessage>
         </tem:AddMessage>
     </x:Body>
-</x:Envelope>
+</x:envelope>
        `
 		return
 	default:
@@ -412,7 +403,6 @@ func CreateSoapTailInput(p *SoapRequest) (tail string) {
 	}
 	return
 }
-
 
 /*
 Update an existing Link in itslearning.
@@ -501,6 +491,7 @@ func (p *SoapRequest) UpdateLink(link Link) (err error, r *SoapRequest) {
 	r = p
 	return
 }
+
 type updateLinkMessage struct {
 	XMLName                 xml.Name `xml:"Message"`
 	Xmlns                   string   `xml:"xmlns,attr"`
@@ -538,16 +529,15 @@ type updateLinkMessage struct {
 	} `xml:"UpdateExtensionInstance"`
 }
 
-
 /*
 Delete a Link in itslearning
 */
-func (p *SoapRequest) DeleteLink (link Link) (err error, r *SoapRequest) {
+func (p *SoapRequest) DeleteLink(link Link) (err error, r *SoapRequest) {
 	mes := new(deleteLinkMessage)
 	mes.Xmlns = "urn:message-schema"
 	mes.VendorId = link.basicData.vendorID
 	mes.DeleteExtensionInstance.ContentSyncKey = link.Id
-	mes.DeleteExtensionInstance.UserSyncKey =  link.basicData.userSyncKey
+	mes.DeleteExtensionInstance.UserSyncKey = link.basicData.userSyncKey
 
 	byteAr, err := xml.Marshal(mes)
 	if err != nil {
@@ -570,12 +560,10 @@ type deleteLinkMessage struct {
 		ContentSyncKey string `xml:"ContentSyncKey"`
 		UserSyncKey    string `xml:"UserSyncKey"`
 	}
-
-
 }
 
 type responseMessage struct {
-	XMLName xml.Name `xml:"Envelope"`
+	XMLName xml.Name `xml:"envelope"`
 	Text    string   `xml:",chardata"`
 	S       string   `xml:"s,attr"`
 	U       string   `xml:"u,attr"`
@@ -613,26 +601,24 @@ type responseMessage struct {
 	} `xml:"Body"`
 }
 
-
-
-func (p *SoapRequest) GetMessageResult (messageID string)(result string, err error){
+func (p *SoapRequest) GetMessageResult(messageID string) (result string, err error) {
 	action := "http://tempuri.org/IDataService/GetMessageResult"
 	soap := `
-<x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
+<x:envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
     <x:Header>
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
-                <wsse:Username>`+p.username+`</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">`+p.password+`</wsse:Password>
+                <wsse:Username>` + p.username + `</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">` + p.password + `</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
     </x:Header>
     <x:Body>
         <tem:GetMessageResult>
-            <tem:messageId>`+messageID+`</tem:messageId>
+            <tem:messageId>` + messageID + `</tem:messageId>
         </tem:GetMessageResult>
     </x:Body>
-</x:Envelope>`
+</x:envelope>`
 
 	httpMethod := "POST"
 	req, err := http.NewRequest(httpMethod, "https://migra.itsltest.com/DataService.svc", strings.NewReader(soap))
@@ -657,7 +643,7 @@ func (p *SoapRequest) GetMessageResult (messageID string)(result string, err err
 }
 
 type GetMessageResultStruct struct {
-	XMLName xml.Name `xml:"Envelope"`
+	XMLName xml.Name `xml:"envelope"`
 	Text    string   `xml:",chardata"`
 	S       string   `xml:"s,attr"`
 	U       string   `xml:"u,attr"`
@@ -701,9 +687,8 @@ type GetMessageResultStruct struct {
 	} `xml:"Body"`
 }
 
-
 type faultstringStruct struct {
-	XMLName xml.Name `xml:"Envelope"`
+	XMLName xml.Name `xml:"envelope"`
 	Text    string   `xml:",chardata"`
 	S       string   `xml:"s,attr"`
 	U       string   `xml:"u,attr"`

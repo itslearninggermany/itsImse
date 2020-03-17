@@ -7,7 +7,7 @@ import (
 )
 
 type client struct {
-	Envelope     envelope `xml:"x:Envelope"`
+	Envelope     envelope
 	username     string
 	password     string
 	security     *security
