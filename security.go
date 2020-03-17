@@ -6,7 +6,7 @@ import (
 )
 
 const wsse = `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd`
-const wsu =  `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd`
+const wsu = `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd`
 const passwordtype = `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText`
 
 type security struct {
@@ -21,8 +21,7 @@ type security struct {
 	} `xml:"UsernameToken"`
 }
 
-
-func setSecurity (username, password string)  *security {
+func SetSecurity(username, password string) *security {
 	out := new(security)
 	out.Wsse = wsse
 	out.Wsu = wsu
@@ -32,15 +31,10 @@ func setSecurity (username, password string)  *security {
 	return out
 }
 
-func (p *security) parseToXml () string{
+func (p *security) parseToXml() string {
 	b, err := xml.Marshal(p)
 	if err != nil {
 		fmt.Println(err)
 	}
 	return string(b)
 }
-
-
-
-
-
