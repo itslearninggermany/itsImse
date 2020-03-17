@@ -5,8 +5,8 @@ const wsu = `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-
 const passwordtype = `http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText`
 
 type security struct {
-	Wsse          string `xml:"wsse,attr"`
-	Wsu           string `xml:"wsu,attr"`
+	Wsse          string `xml:"xmlns:wsse,attr"`
+	Wsu           string `xml:"xmlns:wsu,attr"`
 	UsernameToken struct {
 		Username string `xml:"wsse:Username"`
 		Password struct {
