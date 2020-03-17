@@ -28,11 +28,3 @@ func setSyncRequestHeaderInfo(messageIdentifier string) *syncRequestHeaderInfo {
 	out.MessageIdentifier = messageIdentifier
 	return out
 }
-
-func (p *header) parseToXml() string {
-	b, err := xml.Marshal(p)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return string(b)
-}

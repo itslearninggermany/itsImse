@@ -1,16 +1,17 @@
 package itsImse
 
 import (
+	"encoding/xml"
 	"fmt"
 	uuid "github.com/satori/go.uuid"
 )
 
 type client struct {
-	username          string
-	password          string
-	messageIdentifyer string
-	security          *security
-	envelopeBody      interface{}
+	Envelope     envelope `xml:"x:Envelope"`
+	username     string
+	password     string
+	security     *security
+	envelopeBody *interface{}
 }
 
 func NewClient(username, password string) *client {
@@ -19,12 +20,20 @@ func NewClient(username, password string) *client {
 	return p
 }
 
-func (p *client) ShowRequestBody() string {
-	p.messageIdentifyer = fmt.Sprint(uuid.Must(uuid.NewV4()))
-	head := setHeader(p.security, p.messageIdentifyer)
-	return head.parseToXml()
+func (p *client) ShowRequestBodyFromTheLastCall() string {
+	b, err := xml.Marshal(p.Envelope)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return string(b)
 }
 
+/*
+sasd
+*/
 func (p *client) Call() (response string, messageIdentifyer string) {
+	messageIdentifyer = fmt.Sprint(uuid.Must(uuid.NewV4()))
+	head := setHeader(p.security, messageIdentifyer)
+	p.Envelope = *setEnvelope(head, p.envelopeBody)
 	return "", ""
 }
