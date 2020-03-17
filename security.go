@@ -31,7 +31,7 @@ func SetSecurity(username, password string) *security {
 	return out
 }
 
-func (p *security) parseToXml() string {
+func (p *security) ParseToXml() string {
 	b, err := xml.Marshal(p)
 	if err != nil {
 		fmt.Println(err)
