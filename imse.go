@@ -314,7 +314,7 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
                 <wsse:Username>` + username + `</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">` + password + `</wsse:Password>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-Username-token-Profile-1.0#PasswordText">` + password + `</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
     </x:Header>
@@ -330,7 +330,7 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
 	<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
 <wsse:UsernameToken>
                 <wsse:Username>` + username + `</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">` + password + `</wsse:Password>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-Username-token-Profile-1.0#PasswordText">` + password + `</wsse:Password>
 	</wsse:UsernameToken>
 	</wsse:Security>
 	</x:Header>
@@ -347,7 +347,7 @@ func CreateSoapBegin(soapRequest SoapRequest, username string, password string) 
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
                 <wsse:Username>` + username + `</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">` + password + `</wsse:Password>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-Username-token-Profile-1.0#PasswordText">` + password + `</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
     </x:Header>
@@ -609,7 +609,7 @@ func (p *SoapRequest) GetMessageResult(messageID string) (result string, err err
         <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
             <wsse:UsernameToken>
                 <wsse:Username>` + p.username + `</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">` + p.password + `</wsse:Password>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-Username-token-Profile-1.0#PasswordText">` + p.password + `</wsse:Password>
             </wsse:UsernameToken>
         </wsse:Security>
     </x:Header>

@@ -3,7 +3,7 @@ package itsImse
 type imsePerson struct {
 	FormatName      formatName     `xml:"ims3:formatName"`
 	Name            name           `xml:"ims3:name"`
-	Email           string         `xml:"ims2:email"`
+	Email           string         `xml:"ims2:Email"`
 	UserId          userID         `xml:"ims3:userId"`
 	Address         address        `xml:"ims3:address"`
 	Demographics    demographics   `xml:"ims3:demographics"`
@@ -43,7 +43,7 @@ type userID struct {
 
 type address struct {
 	Locality string   `xml:"ims3:locality"`
-	Postcode string   `xml:"ims3:postcode"`
+	Postcode string   `xml:"ims3:Postcode"`
 	Street   []string `xml:"ims3:street"`
 }
 
@@ -76,11 +76,11 @@ type telephone struct {
 
 func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 	var relationships []relationship
-	if len(person.child) != 0 {
-		for i := 0; i < len(person.child); i++ {
+	if len(person.Child) != 0 {
+		for i := 0; i < len(person.Child); i++ {
 			relationships = append(relationships, relationship{
 				Relation: "Child",
-				SourceId: sourcedId{Identifier: person.child[i]},
+				SourceId: sourcedId{Identifier: person.Child[i]},
 			})
 		}
 	} else {
@@ -88,8 +88,8 @@ func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 	}
 
 	var extensionFields []extensionField
-	if len(person.customInformation) != 0 {
-		for key, value := range person.customInformation {
+	if len(person.CustomInformation) != 0 {
+		for key, value := range person.CustomInformation {
 			extensionFields = append(extensionFields, extensionField{
 				FieldName:  key,
 				FieldType:  "string",
@@ -103,29 +103,29 @@ func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 	var telephones []telephone
 	telephones = append(telephones, telephone{
 		TelType:  "Mobile",
-		TelValue: person.mobile,
+		TelValue: person.Mobile,
 	})
 	telephones = append(telephones, telephone{
 		TelType:  "Voice",
-		TelValue: person.phone,
+		TelValue: person.Phone,
 	})
 
 	var streets []string
-	streets = append(streets, person.address1)
-	streets = append(streets, person.address2)
+	streets = append(streets, person.Address1)
+	streets = append(streets, person.Address2)
 
 	var partNames []partName
 	partNames = append(partNames, partName{
 		NamePartType:  "First",
-		NamePartValue: person.firstName,
+		NamePartValue: person.FirstName,
 	})
 	partNames = append(partNames, partName{
 		NamePartType:  "Last",
-		NamePartValue: person.lastName,
+		NamePartValue: person.LastName,
 	})
 	partNames = append(partNames, partName{
 		NamePartType:  "Nick",
-		NamePartValue: person.nickName,
+		NamePartValue: person.NickName,
 	})
 
 	x = imsePerson{
@@ -134,19 +134,19 @@ func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 			Xsi: xsi,
 		},
 		Name:  name{PartName: partNames},
-		Email: person.email,
+		Email: person.Email,
 		UserId: userID{
-			UserIdValue: person.syncPersonKey,
-			PassWord:    person.password,
+			UserIdValue: person.SyncPersonKey,
+			PassWord:    person.Password,
 		},
 		Address: address{
-			Locality: person.city,
-			Postcode: person.postcode,
+			Locality: person.City,
+			Postcode: person.Postcode,
 			Street:   streets,
 		},
-		Demographics: demographics{Bday: person.birthday},
+		Demographics: demographics{Bday: person.Birthday},
 		InstitutionRole: instituionRole{
-			InstitutionRoleType: person.profile,
+			InstitutionRoleType: person.Profile,
 			PrimaryRoleType:     "true",
 		},
 		Tel:          telephones,
@@ -154,5 +154,5 @@ func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 		Relationship: relationships,
 	}
 
-	return x, person.syncPersonKey
+	return x, person.SyncPersonKey
 }
