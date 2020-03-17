@@ -9,7 +9,7 @@ const ims3 = `http://www.imsglobal.org/services/pms/xsd/imsPersonManDataSchema_v
 const ims1 = `http://www.imsglobal.org/services/common/imsMessBindSchema_v1p0`
 
 type envelope struct {
-	XMLName xml.Name    `xml:"x:envelope"`
+	XMLName xml.Name    `xml:"x:Envelope"`
 	X       string      `xml:"xmlns:x,attr"`
 	Ims     string      `xml:"xmlns:ims,attr"`
 	Ims2    string      `xml:"xmlns:ims2,attr"`
