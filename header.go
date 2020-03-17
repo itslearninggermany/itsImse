@@ -19,8 +19,13 @@ type syncRequestHeaderInfo struct {
 func SetHeader(security *security, messageIdentifier string) *header {
 	out := new(header)
 	out.Security = *security
-	syncreq := new(syncRequestHeaderInfo)
-	syncreq.MessageIdentifier = messageIdentifier
+	out.SyncRequestHeaderInfo = *setSyncRequestHeaderInfo(messageIdentifier)
+	return out
+}
+
+func setSyncRequestHeaderInfo(messageIdentifier string) *syncRequestHeaderInfo {
+	out := new(syncRequestHeaderInfo)
+	out.MessageIdentifier = messageIdentifier
 	return out
 }
 
@@ -31,6 +36,21 @@ func (p *header) ParseToXml() string {
 	}
 	return string(b)
 }
+
+/*
+<header>
+	<ims1:syncRequestHeaderInfo>
+		<ims1:messageIdentifier/>
+	</ims1:syncRequestHeaderInfo>
+	<wsse:Security wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+		<wsse:UsernameToken>
+			<wsse:Username>tnordmann</wsse:Username>
+			<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">pat5rxe4</wsse:Password>
+		</wsse:UsernameToken>
+	</wsse:Security>
+</header>
+
+*/
 
 /*
    <x:Header>
