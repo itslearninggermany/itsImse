@@ -6,7 +6,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type client struct {
+type imsEsClient struct {
 	Envelope     envelope
 	username     string
 	password     string
@@ -14,13 +14,13 @@ type client struct {
 	envelopeBody interface{}
 }
 
-func NewClient(username, password string) *client {
-	p := new(client)
+func NewImseClient(username, password string) *imsEsClient {
+	p := new(imsEsClient)
 	p.security = SetSecurity(username, password)
 	return p
 }
 
-func (p *client) ShowRequestBodyFromTheLastCall() string {
+func (p *imsEsClient) ShowRequestBodyFromTheLastCall() string {
 	b, err := xml.Marshal(p.Envelope)
 	if err != nil {
 		fmt.Println(err)
@@ -28,14 +28,14 @@ func (p *client) ShowRequestBodyFromTheLastCall() string {
 	return string(b)
 }
 
-func (p *client) SetEnvelopeBody(in interface{}) {
+func (p *imsEsClient) SetEnvelopeBody(in interface{}) {
 	p.envelopeBody = in
 }
 
 /*
 sasd
 */
-func (p *client) Call() (response string, messageIdentifyer string) {
+func (p *imsEsClient) Call() (response string, messageIdentifyer string) {
 	messageIdentifyer = fmt.Sprint(uuid.Must(uuid.NewV4()))
 	head := setHeader(p.security, messageIdentifyer)
 	p.Envelope = *setEnvelope(head, p.envelopeBody)
