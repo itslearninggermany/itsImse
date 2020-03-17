@@ -136,7 +136,7 @@ func createImsePerson(person Person) (x imsePerson, syncPersonKey string) {
 		Name:  name{PartName: partNames},
 		Email: person.Email,
 		UserId: userID{
-			UserIdValue: person.SyncPersonKey,
+			UserIdValue: person.Username,
 			PassWord:    person.Password,
 		},
 		Address: address{
