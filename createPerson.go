@@ -4,7 +4,7 @@ import "encoding/xml"
 
 type createPersonRequest struct {
 	XMLName   xml.Name   `xml:"ims:createPersonRequest"`
-	SourcedId sourcedId  `xml:"ims2:sourcedId"`
+	SourcedId sourcedId  `xml:"ims:sourcedId"`
 	Person    imsePerson `xml:"ims:person"`
 }
 
