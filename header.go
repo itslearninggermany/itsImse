@@ -16,9 +16,9 @@ type syncRequestHeaderInfo struct {
 	MessageIdentifier string `xml:"ims1:messageIdentifier"`
 }
 
-func SetHeader(security security, messageIdentifier string) *header {
+func SetHeader(security *security, messageIdentifier string) *header {
 	out := new(header)
-	out.Security = security
+	out.Security = *security
 	syncreq := new(syncRequestHeaderInfo)
 	syncreq.MessageIdentifier = messageIdentifier
 	return out
