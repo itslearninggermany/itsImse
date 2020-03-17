@@ -1,10 +1,5 @@
 package itsImse
 
-import (
-	"encoding/xml"
-	"fmt"
-)
-
 type Header header
 
 type header struct {
