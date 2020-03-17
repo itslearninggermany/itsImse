@@ -11,7 +11,7 @@ type client struct {
 	username     string
 	password     string
 	security     *security
-	envelopeBody *interface{}
+	envelopeBody interface{}
 }
 
 func NewClient(username, password string) *client {
@@ -26,6 +26,10 @@ func (p *client) ShowRequestBodyFromTheLastCall() string {
 		fmt.Println(err)
 	}
 	return string(b)
+}
+
+func (p *client) SetEnvelopeBody(in interface{}) {
+	p.envelopeBody = in
 }
 
 /*

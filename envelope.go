@@ -5,9 +5,9 @@ type envelope struct {
 	Body   interface{} `xml:"x:Body"`
 }
 
-func setEnvelope(header *header, body *interface{}) *envelope {
+func setEnvelope(header *header, body interface{}) *envelope {
 	out := new(envelope)
 	out.Header = *header
-	out.Body = *body
+	out.Body = body
 	return out
 }
