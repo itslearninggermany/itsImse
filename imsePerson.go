@@ -28,7 +28,7 @@ type instituionRole struct {
 }
 
 type name struct {
-	PartName []partName `xml:"ims3:partname"`
+	PartName []partName `xml:"ims3:partName"`
 }
 
 type partName struct {
