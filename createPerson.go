@@ -10,7 +10,7 @@ type createPersonRequest struct {
 
 func (p *imsEsClient) CreatePerson(person Person) *imsEsClient {
 	imsePerson, syncPersonKey := createImsePerson(person)
-	p.envelopeBody = createPersonRequest{
+	p.envelopeBody.request = createPersonRequest{
 		SourcedId: sourcedId{Identifier: syncPersonKey},
 		Person:    imsePerson,
 	}
