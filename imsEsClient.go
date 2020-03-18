@@ -11,7 +11,7 @@ type imsEsClient struct {
 	username     string
 	password     string
 	security     *security
-	envelopeBody interface{} `xml:"x:Body"`
+	envelopeBody *interface{} `xml:"x:Body"`
 }
 
 func NewImseClient(username, password string) *imsEsClient {
@@ -28,7 +28,7 @@ func (p *imsEsClient) ShowRequestBodyFromTheLastCall() string {
 	return string(b)
 }
 
-func (p *imsEsClient) SetEnvelopeBody(in interface{}) {
+func (p *imsEsClient) SetEnvelopeBody(in *interface{}) {
 	p.envelopeBody = in
 }
 
