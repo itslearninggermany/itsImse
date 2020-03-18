@@ -19,7 +19,7 @@ type envelope struct {
 	Body    interface{} `xml:"x:Body"`
 }
 
-func setEnvelope(header *header, body interface{}) *envelope {
+func setEnvelope(header *header, body *interface{}) *envelope {
 	out := new(envelope)
 	out.X = x
 	out.Ims = ims
@@ -27,6 +27,6 @@ func setEnvelope(header *header, body interface{}) *envelope {
 	out.Ims3 = ims3
 	out.Ims1 = ims1
 	out.Header = *header
-	out.Body = body
+	out.Body = *body
 	return out
 }
