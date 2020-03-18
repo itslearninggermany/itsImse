@@ -9,21 +9,17 @@ const ims3 = `http://www.imsglobal.org/services/pms/xsd/imsPersonManDataSchema_v
 const ims1 = `http://www.imsglobal.org/services/common/imsMessBindSchema_v1p0`
 
 type envelope struct {
-	XMLName xml.Name `xml:"x:Envelope"`
-	X       string   `xml:"xmlns:x,attr"`
-	Ims     string   `xml:"xmlns:ims,attr"`
-	Ims2    string   `xml:"xmlns:ims2,attr"`
-	Ims3    string   `xml:"xmlns:ims3,attr"`
-	Ims1    string   `xml:"xmlns:ims1,attr"`
-	Header  header   `xml:"x:Header"`
-	Body    body     `xml:"x:Body"`
+	XMLName xml.Name    `xml:"x:Envelope"`
+	X       string      `xml:"xmlns:x,attr"`
+	Ims     string      `xml:"xmlns:ims,attr"`
+	Ims2    string      `xml:"xmlns:ims2,attr"`
+	Ims3    string      `xml:"xmlns:ims3,attr"`
+	Ims1    string      `xml:"xmlns:ims1,attr"`
+	Header  header      `xml:"x:Header"`
+	Body    interface{} `xml:"x:Body"`
 }
 
-type body struct {
-	request interface{}
-}
-
-func setEnvelope(header *header, body body) *envelope {
+func setEnvelope(header *header, body interface{}) *envelope {
 	out := new(envelope)
 	out.X = x
 	out.Ims = ims
