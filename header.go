@@ -1,8 +1,11 @@
 package itsImse
 
+import "encoding/xml"
+
 type Header header
 
 type header struct {
+	XMLName               xml.Name              `xml:"x:Header"`
 	SyncRequestHeaderInfo syncRequestHeaderInfo `xml:"ims1:syncRequestHeaderInfo"`
 	Security              security              `xml:"wsse:Security"`
 }
