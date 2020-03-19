@@ -16,5 +16,6 @@ func (p *imsEsClient) CreatePerson(person Person) *imsEsClient {
 			Person:    imsePerson,
 		},
 	}
+	p.method = "createPerson"
 	return p
 }
