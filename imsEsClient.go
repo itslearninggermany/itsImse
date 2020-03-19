@@ -42,7 +42,7 @@ sasd
 func (p *imsEsClient) Call() (response string, messageIdentifyer string) {
 	head := setHeader(p.security, messageIdentifyer)
 	p.Envelope.Header = *head
-	soapbyte, err := xml.Marshal(p)
+	soapbyte, err := xml.Marshal(p.Envelope)
 	if err != nil {
 		return
 	}
