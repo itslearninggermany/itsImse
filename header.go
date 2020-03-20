@@ -17,7 +17,7 @@ type syncRequestHeaderInfo struct {
 func setHeader(security *security, messageIdentifier string) *header {
 	out := new(header)
 	out.Security = *security
-	out.SyncRequestHeaderInfo = *setSyncRequestHeaderInfo(messageIdentifier)
+	out.SyncRequestHeaderInfo = syncRequestHeaderInfo{MessageIdentifier: messageIdentifier}
 	return out
 }
 
