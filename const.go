@@ -8,6 +8,8 @@ func getSoapAction(input string) (out string, err error) {
 	switch input {
 	case "createPerson":
 		return "http://www.imsglobal.org/soap/pms/createPerson", nil
+	case "readPerson":
+		return "http://www.imsglobal.org/soap/pms/readPersons", nil
 
 	default:
 		return "", errors.New("No method in struct")
