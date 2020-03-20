@@ -12,7 +12,7 @@ type sourcedIdSet struct {
 	Identifier string   `xml:"ims2:identifier"`
 }
 
-func (p *imsEsClient) readPerson(identifier string) *imsEsClient {
+func (p *imsEsClient) ReadPerson(identifier string) *imsEsClient {
 	p.Envelope.Body = body{
 		Content: readPersonsRequest{
 			SourcedIdSet: sourcedIdSet{
